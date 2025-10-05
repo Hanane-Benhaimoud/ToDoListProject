@@ -77,6 +77,29 @@ function renderTasks() {
         </li>
     `).join('');
 }
+// Mettre à jour les statistiques
+function updateStats() {
+    const activeTasks = tasks.filter(task => !task.completed).length;
+    taskStats.textContent = `${activeTasks} tâche(s) restante(s)`;
+}
+
+// Événements
+addBtn.addEventListener('click', addTask);
+
+taskInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        addTask();
+    }
+});
+
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderTasks();
+    });
+});
 // Initialisation
 renderTasks();
 updateStats();
